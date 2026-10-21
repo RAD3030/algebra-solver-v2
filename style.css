@@ -1,86 +1,82 @@
 body {
     background-color: #1e1e24;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Calculator Styling */
-#calculator-container {
-    background-color: #2d2d34;
+.calc-container {
+    background: #333;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.5);
     width: 320px;
 }
 
-.calc-header {
-    color: #a0a0a5;
-    font-size: 12px;
-    margin-bottom: 10px;
+.calc-screen {
+    background: #a3c1ad;
+    color: #111;
+    font-family: monospace;
+    font-size: 2rem;
     text-align: right;
-    letter-spacing: 1px;
-}
-
-#display {
-    width: 100%;
-    height: 60px;
-    background-color: #151518;
-    border: none;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 28px;
-    text-align: right;
-    padding: 0 15px;
-    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 5px;
     margin-bottom: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    box-shadow: inset 0px 4px 5px rgba(0,0,0,0.2);
 }
 
-.buttons {
+.calc-buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
 
 .btn {
-    background-color: #3e3e46;
+    background: #555;
+    color: white;
     border: none;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 18px;
-    padding: 15px 0;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 5px;
     cursor: pointer;
     transition: background 0.1s;
 }
 
-.btn:hover { background-color: #4e4e56; }
-.btn.op { background-color: #f39c12; }
-.btn.op:hover { background-color: #e67e22; }
-.btn.clear { background-color: #e74c3c; }
-.btn.equal { background-color: #27ae60; }
+.btn:active { background: #777; }
+.btn.op { background: #f39c12; }
+.btn.clear { background: #e74c3c; }
+.btn.eval { background: #2ecc71; }
 
-/* Hidden state rules */
+/* Hidden Game Container */
 .hidden {
     display: none !important;
 }
 
-/* Game Interface Styling */
 #game-container {
     width: 100vw;
     height: 100vh;
-    background-color: #000000;
-    color: #00ff00;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
+    background: #000;
+    position: relative;
 }
 
-#game-canvas-placeholder {
-    text-align: center;
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#game-ui {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    font-family: monospace;
+    text-shadow: 2px 2px #000;
+    pointer-events: none;
 }
