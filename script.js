@@ -18,9 +18,7 @@ function evaluateExpression() {
         launchGame();
         return;
     }
-
     try {
-        // Replace algebraic power shorthand for evaluation
         let formattedExpr = expression.replace(/\^/g, '**');
         let result = eval(formattedExpr);
         expression = String(result);
@@ -31,12 +29,10 @@ function evaluateExpression() {
     }
 }
 
-// MINECRAFT ENGINE CONTEXT
 function launchGame() {
-    // Hide Calculator, show 3D Game Area
     document.getElementById("calculator").classList.add("hidden");
     document.getElementById("game-container").classList.remove("hidden");
-    
+    // Call the initialization function so the game actually starts
     initMinecraftClone();
 }
 
@@ -44,48 +40,67 @@ function initMinecraftClone() {
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     
-    // Set layout dimensions
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     let angleX = 0;
     let angleY = 0;
 
-    // Simple pseudo-3D math block rendering loop
     function draw() {
-        ctx.fillStyle = "#87CEEB"; // Sky Blue background
+        // Clear screen with a sky-blue color
+        ctx.fillStyle = "#87CEEB"; 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2 + 100);
         
-        // Simple matrix projection for rendering a grid of cubes
-        for (let x = -4; x <= 4; x++) {
-            for (let z = 1; z <= 8; z++) {
-                // Apply look angle transformations
-                let isoX = (x * 60 - angleX * 50) / (z * 0.2 + 1);
-                let isoY = (200 - angleY * 50) / (z * 0.2 + 1) - (z * 30);
-                let size = 50 / (z * 0.2 + 1);
+        ctx.save();
+        // Centers the grid and drops it slightly down the screen
+        ctx.translate(canvas.width / 2, canvas.height / 2);
 
-                // Draw dirt block tops
+        // Render from back-to-front (Z goes from 8 down to 1) 
+        // This stops closer blocks from being drawn over by far blocks
+        for (let z = 8; z >= 1; z--) {
+            for (let x = -4; x <= 4; x++) {
+                
+                // Calculate perspective scaling factor
+                let scale = 1 / (z * 0.2 + 1);
+                
+                // Offset block coordinates by player camera movement variables (angleX, angleY)
+                let worldX = (x * 60) - (angleX * 80);
+                let worldY = 100 - (angleY * 80);
+                
+                // Project 3D coordinates onto a 2D screen surface
+                let isoX = worldX * scale;
+                let isoY = worldY * scale - (z * 15 * scale); // Adjusted block stacking height multiplier
+                let size = 60 * scale;
+
+                // Draw Grass Top Layer
                 ctx.fillStyle = (x + z) % 2 === 0 ? "#557a2b" : "#4d6e27";
                 ctx.fillRect(isoX, isoY, size, size);
 
-                // Draw dirt block side depth
+                // Draw Dirt Side Layer
                 ctx.fillStyle = "#866043";
                 ctx.fillRect(isoX, isoY + size, size, size * 0.4);
+                
+                // Optional: Draw fine grid lines around blocks to give depth texture definition
+                ctx.strokeStyle = "rgba(0,0,0,0.15)";
+                ctx.strokeRect(isoX, isoY, size, size + (size * 0.4));
             }
         }
         ctx.restore();
         requestAnimationFrame(draw);
     }
 
-    // Capture standard camera movement keys
     window.addEventListener("keydown", (e) => {
+        // Smooth camera movement boundaries
         if (e.key === "w" || e.key === "ArrowUp") angleY += 0.1;
         if (e.key === "s" || e.key === "ArrowDown") angleY -= 0.1;
         if (e.key === "a" || e.key === "ArrowLeft") angleX -= 0.1;
         if (e.key === "d" || e.key === "ArrowRight") angleX += 0.1;
+    });
+
+    // Make canvas automatically fit the window if resized
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     });
 
     draw();
