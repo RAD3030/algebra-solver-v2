@@ -1,0 +1,86 @@
+body {
+    background-color: #1e1e24;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Calculator Styling */
+#calculator-container {
+    background-color: #2d2d34;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    width: 320px;
+}
+
+.calc-header {
+    color: #a0a0a5;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-align: right;
+    letter-spacing: 1px;
+}
+
+#display {
+    width: 100%;
+    height: 60px;
+    background-color: #151518;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 28px;
+    text-align: right;
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    background-color: #3e3e46;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 15px 0;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.btn:hover { background-color: #4e4e56; }
+.btn.op { background-color: #f39c12; }
+.btn.op:hover { background-color: #e67e22; }
+.btn.clear { background-color: #e74c3c; }
+.btn.equal { background-color: #27ae60; }
+
+/* Hidden state rules */
+.hidden {
+    display: none !important;
+}
+
+/* Game Interface Styling */
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    color: #00ff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#game-canvas-placeholder {
+    text-align: center;
+}
